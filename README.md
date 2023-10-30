@@ -39,5 +39,5 @@ image = preprocess.get_cell_background("path/to/image.tiff", normalize=True)
 ## Create FISH images:
 
 ```python
-FISH_dict = create_FISH(rgb_patch, mask_to_patch, num_red=2, num_green=8)
+fish_patch, boxes, labels = create_FISH(rgb_patch, mask_to_patch, num_red=2, num_green=8)
 ```
