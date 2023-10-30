@@ -1,5 +1,7 @@
 # FISHcreation
 
+![logo](assets/logo_fishcreation.png)
+
 ## Overview
 
 FISHcreation is a Python library designed for image processing and analysis, specifically tailored for FISH (Fluorescence In Situ Hybridization) images. The library provides a range of functionalities, from preprocessing TIFF images to merging bounding boxes based on overlap criteria.
