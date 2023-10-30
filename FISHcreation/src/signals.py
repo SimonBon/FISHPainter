@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.ndimage import gaussian_filter, map_coordinates, binary_erosion
-
-
+from  .process_boxes import merge_boxes_by_labels
 
 def create_signal(image_size, position, signal_size, min_brightness=0.2, max_brightness=1.0):
     """
@@ -31,7 +30,7 @@ def create_signal(image_size, position, signal_size, min_brightness=0.2, max_bri
     return signal
 
 
-def create_FISH(patch, mask, num_red=2, num_green=2, signal_size=3, seed=None, alpha=20, sigma=2):
+def create_FISH(patch, mask, num_red=2, num_green=2, signal_size=3, seed=None, alpha=20, sigma=2, return_as_dict=False):
     """
     Modifies the input image patch by placing Gaussian dots based on the mask and desired number of red and green dots.
 
@@ -63,24 +62,33 @@ def create_FISH(patch, mask, num_red=2, num_green=2, signal_size=3, seed=None, a
     
     valid_positions = np.argwhere(diluted_mask)
 
-    bboxes = []
+    bboxes, labels = [], []
+    
 
     for _ in range(num_red):
         position = valid_positions[np.random.choice(len(valid_positions))]
         red_signal = create_signal((h, w), (position[0], position[1]), signal_size)
         red_signal, bbox = elastic_transform(red_signal, alpha=alpha, sigma=sigma)
         patch[..., 0] += red_signal  # Add to red channel
-        bboxes.append([(1, 0, 0), *bbox])
-
+        bboxes.append(bbox)
+        labels.append(1)
+        
     for _ in range(num_green):
         position = valid_positions[np.random.choice(len(valid_positions))]
         green_signal = create_signal((h, w), (position[0], position[1]), signal_size)
         green_signal, bbox = elastic_transform(green_signal, alpha=alpha, sigma=sigma)
         patch[..., 1] += green_signal  # Add to green channel
-        bboxes.append([(0, 1, 0), *bbox])
+        bboxes.append(bbox)
+        labels.append(2)
 
     patch = np.clip(patch, 0, 1)  # Ensure values are in [0, 1] range
-    return patch, bboxes
+    bboxes, labels = merge_boxes_by_labels(bboxes, labels)
+    
+    if return_as_dict:
+        return dict(patch=patch, bboxes=bboxes, labels=labels)
+    
+    return patch, bboxes, labels
+
 
 
 def elastic_transform(image, alpha, sigma):
