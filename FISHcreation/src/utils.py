@@ -1,6 +1,4 @@
 import h5py
-import numpy as np
-import pickle as pkl
 
 def dataset_from_bboxes(bbox_dataset, filepath):
 
