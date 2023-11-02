@@ -6,7 +6,7 @@ def read_requirements():
 
 setup(
     name="FISHcreation",
-    version="0.2",
+    version="0.3",
     packages=find_packages(),
     install_requires=read_requirements(),
     author="Your Name",

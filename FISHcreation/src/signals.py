@@ -122,4 +122,4 @@ def elastic_transform(image, alpha, sigma):
     min_y, min_x = active_coords.min(axis=0)
     max_y, max_x = active_coords.max(axis=0)
     
-    return (distored_image/distored_image.max())*max_scale, (min_y, min_x, max_y, max_x)
+    return (distored_image/distored_image.max())*max_scale, (min_x, min_y, max_x, max_y)
