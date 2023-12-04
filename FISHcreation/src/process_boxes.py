@@ -1,3 +1,5 @@
+combine = {1: [1, 4], 2: [2, 3], 3: [3, 2], 4: [4, 1]}
+
 def should_merge(box1, box2):
     """
     Determine if two bounding boxes should be merged.
@@ -25,7 +27,7 @@ def should_merge(box1, box2):
     return overlap_box1 > 0.3 or overlap_box2 > 0.3
 
 
-def merge_boxes_for_label(boxes_of_labels, labels_of_labels):
+def merge_boxes_for_label(boxes_of_labels, labels_of_labels, combined_label):
     """
     Merge bounding boxes of the same label based on overlap criteria.
 
@@ -36,6 +38,7 @@ def merge_boxes_for_label(boxes_of_labels, labels_of_labels):
     Returns:
     - List of merged bounding boxes with labels.
     """
+    new_merge = False
     merged_boxes_with_labels = []
     boxes_with_labels = list(zip(boxes_of_labels, labels_of_labels))
     
@@ -46,7 +49,12 @@ def merge_boxes_for_label(boxes_of_labels, labels_of_labels):
         merged_area = [(main_box, main_label)]
 
         for box, label in boxes_with_labels:
+            # Skip comparison if it's the same box
+            if box == main_box:
+                continue
+
             if should_merge(main_box, box):
+                new_merge = True
                 merged_area.append((box, label))
             else:
                 other_boxes.append((box, label))
@@ -58,7 +66,7 @@ def merge_boxes_for_label(boxes_of_labels, labels_of_labels):
                 max(box[2] for box, _ in merged_area),
                 max(box[3] for box, _ in merged_area)
             )
-            merged_label = 3  # change label to 3, you can modify as needed
+            merged_label = combined_label  # change label to 3, you can modify as needed
         elif len(merged_area) > 1:
             merged_box = (
                 min(box[0] for box, _ in merged_area),
@@ -75,7 +83,7 @@ def merge_boxes_for_label(boxes_of_labels, labels_of_labels):
         boxes_with_labels = other_boxes
 
     merged_boxes, merged_labels = zip(*merged_boxes_with_labels)
-    return list(merged_boxes), list(merged_labels)
+    return list(merged_boxes), list(merged_labels), new_merge
 
 
 def merge_boxes_by_labels(boxes, labels):
@@ -89,15 +97,25 @@ def merge_boxes_by_labels(boxes, labels):
     - List of merged bounding boxes.
     """
     unique_labels = set(label for label in labels)
-    merged_boxes = []
-    merged_labels = []
 
-    for label in unique_labels:
+
+    new_merge = True 
+    while new_merge:
         
-        boxes_of_labels, labels_of_labels = zip(*[(box, lbl) for box, lbl in zip(boxes, labels) if lbl == label])
-        merged_boxes_for_label, merged_labels_for_label = merge_boxes_for_label(boxes_of_labels, labels_of_labels)
+        merged_boxes = []
+        merged_labels = []
         
-        merged_boxes.extend(merged_boxes_for_label)
-        merged_labels.extend(merged_labels_for_label)
+        for label in unique_labels:
+            
+            label = combine[label]
+            
+            boxes_of_labels, labels_of_labels = zip(*[(box, lbl) for box, lbl in zip(boxes, labels) if lbl in label])
+            merged_boxes_for_label, merged_labels_for_label, new_merge = merge_boxes_for_label(boxes_of_labels, labels_of_labels, combined_label=max(label))
+            
+            merged_boxes.extend(merged_boxes_for_label)
+            merged_labels.extend(merged_labels_for_label)
+        
+        boxes = merged_boxes
+        labels = merged_labels
 
     return merged_boxes, merged_labels
