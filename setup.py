@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-package_name = "FISHcreation"
+package_name = "FISHPainter"
 
 def read_requirements():
     with open('requirements.txt', 'r') as file:
@@ -18,7 +18,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     license="MIT",
-    url="https://github.com/SimonBon/FISHcreation",
+    url="https://github.com/SimonBon/FISHPainter",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",

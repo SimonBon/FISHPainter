@@ -1,6 +1,6 @@
 # FISHcreation
 
-![logo](assets/FISHcreation.png)
+![logo](assets/FISH-Painter.png)
 
 ## Overview
 
