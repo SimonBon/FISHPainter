@@ -1,6 +1,7 @@
 import h5py
+import numpy as np
 
-def dataset_from_bboxes(bbox_dataset, filepath, train_split=0.9, val_split=0.1):
+def create_dataset(dataset, filepath):
     """
     Create an h5py file and populate it with data from a bounding box dataset.
     The data is split into training and validation sets.
@@ -14,22 +15,15 @@ def dataset_from_bboxes(bbox_dataset, filepath, train_split=0.9, val_split=0.1):
     Returns:
         None
     """
-    assert train_split + val_split == 1.0, "Train and validation split should sum to 1.0"
-
-    num_samples = len(bbox_dataset)
-    num_train = int(train_split * num_samples)
-    num_val = num_samples - num_train
+    
+    print(dataset.keys())
 
     with h5py.File(filepath, 'w') as f:
-        train_group = f.create_group("training")
-        val_group = f.create_group("validation")
+        
+        for i in range(len(dataset["patches"])):
+            
+            g = f.create_group(str(i))
 
-        for n, data in enumerate(bbox_dataset):
-            if n < num_train:
-                g = train_group.create_group(str(n))
-            else:
-                g = val_group.create_group(str(n - num_train))
-
-            g.create_dataset("patch", data=data["patch"])
-            g.create_dataset("labels", data=data["labels"])
-            g.create_dataset("bboxes", data=data["bboxes"])
+            g.create_dataset("patches", data=dataset["patches"][i])
+            g.create_dataset("labels", data=dataset["labels"][i])
+            g.create_dataset("bboxes", data=dataset["bboxes"][i])
