@@ -1,4 +1,4 @@
-# FISHcreation
+# FISH-Painter
 
 ![logo](assets/FISH-Painter.png)
 
