@@ -1,0 +1,38 @@
+
+#definition of each condition and its parameters individually
+CONDITION_0:                # Name is variable
+#number of patches
+  number: 100               # integer
+
+  target_class: 0           # integer
+#red defintion
+  num_red: [2, 3]           # [low, high] or number
+  num_red_cluster: [1, 2]   # low, high] or number
+  red_cluster_size: [5, 10] # [low, high] or number
+
+#green definition
+  num_green: 2              # [low, high] or number
+  num_green_cluster: 1      # [low, high] or number
+  green_cluster_size: 6     # [low, high] or number
+  
+  signal_size: [1, 2]       #[low, high] or number
+
+
+#definition of second condition
+CONDITION_1:                # Name is variable
+#number of patches
+  number: 100               # integer
+
+  target_class: 1           # integer
+#red defintion
+  num_red: 2                # [low, high] or number
+  num_red_cluster: 0        # [low, high] or number
+  red_cluster_size: 0       # [low, high] or number
+
+#green definition
+  num_green: [6, 10]        # [low, high] or number
+  num_green_cluster: 0      # [low, high] or number
+  green_cluster_size: 0     # [low, high] or number
+  
+#size definition
+  signal_size: 1            # [low, high] or number

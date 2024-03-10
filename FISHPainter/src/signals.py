@@ -1,12 +1,15 @@
 import numpy as np
 from scipy.ndimage import gaussian_filter, map_coordinates, binary_erosion
 from  .process_boxes import merge_boxes_by_labels
+from numbers import Number
 
 MAX_ITERS=100
 
 # debug
 import matplotlib.pyplot as plt
 from cellplot.patches import draw_boxes_on_patch
+
+from typing import Union
 
 def create_signal(image_size, position, signal_size, min_brightness=0.5, max_brightness=1.0):
     """
@@ -54,11 +57,14 @@ def create_cluster(image_size, position, valid_positions, signal_size, cluster_s
     iters = 0
     while curr_signals < cluster_size:
         
+        
+        curr_signal_size = np.random.uniform(signal_size[0], signal_size[1], 1)[0]
+        
         iters += 1
         if iters > MAX_ITERS:
             break
         
-        next_position = np.array([np.round(x + np.random.choice([-2*signal_size, +2*signal_size], 1)[0], 0).astype(int) for x in curr_position])
+        next_position = np.array([np.round(x + np.random.choice([-2*curr_signal_size, +2*curr_signal_size], 1)[0], 0).astype(int) for x in curr_position])
         
         if not (np.any(np.all(valid_positions == next_position, axis=1))):
             continue
@@ -68,7 +74,7 @@ def create_cluster(image_size, position, valid_positions, signal_size, cluster_s
         curr_position = next_position
         curr_signals += 1
         
-    signal = gaussian_filter(signal, sigma=signal_size)
+    signal = gaussian_filter(signal, sigma=curr_signal_size)
     
     signal = signal / signal.max()
     signal[signal < 0.2] = 0.
@@ -79,7 +85,7 @@ def create_cluster(image_size, position, valid_positions, signal_size, cluster_s
     return signal
 
 
-def create_FISH(patch, mask, num_red=2, num_green=2, num_green_cluster=0, num_red_cluster=0, signal_size=2, green_cluster_size=4, red_cluster_size=4, seed=None, alpha=20, sigma=2, return_as_dict=False):
+def create_FISH(patch, mask, num_red=2, num_green=2, num_green_cluster=0, num_red_cluster=0, signal_size: Union[list[Number], int, float]=2, green_cluster_size=4, red_cluster_size=4, seed=None, alpha=20, sigma=2, return_as_dict=False):
     """
     Modifies the input image patch by placing Gaussian dots based on the mask and desired number of red and green dots.
 
@@ -105,16 +111,24 @@ def create_FISH(patch, mask, num_red=2, num_green=2, num_green_cluster=0, num_re
 
     h, w, _ = patch.shape
     
+    if not isinstance(signal_size, Number):
+        max_signal_size = max(signal_size)
+    else:
+        max_signal_size = signal_size
+        signal_size = [signal_size, signal_size]
+
     # Erode mask
-    structure = np.ones((int(2*signal_size), int(2*signal_size)))
+    structure = np.ones((int(2*max_signal_size), int(2*max_signal_size)))
     diluted_mask = binary_erosion(mask, structure=structure)
     
     valid_positions = np.argwhere(diluted_mask)
 
     bboxes, labels = [], []
     
-
     for _ in range(num_red):
+        
+        np.random.uniform(signal_size[0], signal_size[1], 1)
+        
         position = valid_positions[np.random.choice(len(valid_positions))]
         red_signal = create_signal((h, w), (position[0], position[1]), signal_size)
         red_signal, bbox = elastic_transform(red_signal, alpha=alpha, sigma=sigma)
@@ -122,13 +136,18 @@ def create_FISH(patch, mask, num_red=2, num_green=2, num_green_cluster=0, num_re
         bboxes.append(bbox)
         labels.append(1)
         
+        
     for _ in range(num_green):
+        
+        np.random.uniform(signal_size[0], signal_size[1], 1)
+        
         position = valid_positions[np.random.choice(len(valid_positions))]
         green_signal = create_signal((h, w), (position[0], position[1]), signal_size)
         green_signal, bbox = elastic_transform(green_signal, alpha=alpha, sigma=sigma)
         patch[..., 1] += green_signal  # Add to green channel
         bboxes.append(bbox)
         labels.append(2)
+        
         
     for _ in range(num_green_cluster):
         
@@ -139,6 +158,7 @@ def create_FISH(patch, mask, num_red=2, num_green=2, num_green_cluster=0, num_re
         bboxes.append(bbox)
         labels.append(3)
         
+        
     for _ in range(num_red_cluster):
         
         start_position = valid_positions[np.random.choice(len(valid_positions))]
@@ -147,6 +167,7 @@ def create_FISH(patch, mask, num_red=2, num_green=2, num_green_cluster=0, num_re
         patch[..., 0] += red_signal  # Add to red channel
         bboxes.append(bbox)
         labels.append(4)
+
 
     patch = np.clip(patch, 0, 1)  # Ensure values are in [0, 1] range
     
