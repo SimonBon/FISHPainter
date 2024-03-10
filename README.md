@@ -6,6 +6,8 @@
 
 FISHPainter is a Python library designed for image processing and generation, specifically tailored for FISH (Fluorescence In Situ Hybridization) images. The library offers a wide range of functionalities, from preprocessing TIFF images, merging bounding boxes based on overlap criteria, to providing an end-to-end workflow for generating a synthetic dataset based on user-defined criteria. It includes a library of DAPI-stained images of fluorescence microscopy nuclei [1](https://zenodo.org/records/10798938).
 
+<span style="color:red"> FISHPainter as of now only supports the creation of FISH probes used for the assessment of copy number, but future functionality is planned for ALT and Break-Apart probes.</span>
+
 ## Features
 
 - **Create Synthetic Dataset**: This feature enables the creation of a synthetic dataset using either a user-defined library for cell backgrounds or the provided library. See [create.py](https://github.com/SimonBon/FISHPainter/blob/main/FISHPainter/src/datasets/preprocess.py) for details. An overview of its usage is provided in the [Notebook](https://github.com/SimonBon/FISHPainter/blob/main/notebook.ipynb).
