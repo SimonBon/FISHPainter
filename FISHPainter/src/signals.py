@@ -85,7 +85,7 @@ def create_cluster(image_size, position, valid_positions, signal_size, cluster_s
     return signal
 
 
-def create_FISH(patch, mask, num_red=2, num_green=2, num_green_cluster=0, num_red_cluster=0, signal_size: Union[list[Number], int, float]=2, green_cluster_size=4, red_cluster_size=4, seed=None, alpha=20, sigma=2, return_as_dict=False):
+def create_FISH(patch, mask, num_red=0, num_green=0, num_green_cluster=0, num_red_cluster=0, signal_size: Union[list[Number], int, float]=1, green_cluster_size=0, red_cluster_size=0, seed=None, alpha=20, sigma=2, return_as_dict=False):
     """
     Modifies the input image patch by placing Gaussian dots based on the mask and desired number of red and green dots.
 
