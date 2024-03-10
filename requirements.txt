@@ -50,7 +50,6 @@ importlib_resources==6.1.3
 inquirer==3.1.3
 installer==0.7.0
 ipykernel==6.21.1
-ipython @ file:///home/conda/feedstock_root/build_artifacts/ipython_1680185408135/work
 jaraco.classes==3.3.0
 jedi==0.18.2
 Jinja2==3.1.3
@@ -100,7 +99,6 @@ nvidia-nvtx-cu11==11.7.91
 nvidia-nvtx-cu12==12.1.105
 opencv-python==4.9.0.80
 opencv-python-headless==4.9.0.80
-packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1696202382185/work
 parso==0.8.3
 pathlib==1.0.1
 pexpect==4.8.0
@@ -112,8 +110,6 @@ pluggy==1.3.0
 poetry==1.6.1
 poetry-core==1.7.0
 poetry-plugin-export==1.5.0
-prompt-toolkit @ file:///home/conda/feedstock_root/build_artifacts/prompt-toolkit_1702399386289/work
-psutil @ file:///home/conda/feedstock_root/build_artifacts/psutil_1705722404069/work
 ptyprocess==0.7.0
 pure-eval==0.2.2
 pyaml==23.12.0
@@ -124,7 +120,6 @@ pyparsing==3.1.2
 pyproject-api==1.6.1
 pytest==7.4.2
 pytest-cov==4.1.0
-python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1709299778482/work
 python-editor==1.0.4
 python-multipart==0.0.6
 pytorch-lightning==2.0.8
@@ -137,7 +132,6 @@ requests-toolbelt==1.0.0
 roifile==2024.1.10
 scipy==1.12.0
 shellingham==1.5.3
-six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
 stack-data==0.6.2
 stardist==0.8.5
 starlette==0.27.0
@@ -156,7 +150,6 @@ traitlets==5.9.0
 trimesh==3.23.5
 triton==2.0.0
 trove-classifiers==2023.8.7
-typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1708904622550/work
 urllib3==2.2.1
 uvicorn==0.23.2
 virtualenv==20.24.5
@@ -165,4 +158,3 @@ wcwidth==0.2.6
 websocket-client==1.6.3
 websockets==11.0.3
 yarl==1.9.2
-zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1695255097490/work
