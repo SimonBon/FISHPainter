@@ -8,7 +8,7 @@ FISHPainter is a Python library designed for image processing and generation, sp
 
 ## Features
 
-- **Create Synthetic Dataset**: This feature enables the creation of a synthetic dataset using either a user-defined library for cell backgrounds or the provided library. See [create.py](https://github.com/SimonBon/FISHPainter/blob/main/FISHPainter/src/datasets/preprocess.py) for details. An overview of its usage is provided in the [Notebook](https://github.com/SimonBon/FISHPainter/blob/main/FISHPainter/notebook.ipynb).
+- **Create Synthetic Dataset**: This feature enables the creation of a synthetic dataset using either a user-defined library for cell backgrounds or the provided library. See [create.py](https://github.com/SimonBon/FISHPainter/blob/main/FISHPainter/src/datasets/preprocess.py) for details. An overview of its usage is provided in the [Notebook](https://github.com/SimonBon/FISHPainter/blob/main/notebook.ipynb).
 - **Preprocessing**: Functions for reading TIFF images and normalizing them are available at [preprocess.py](https://github.com/SimonBon/FISHPainter/blob/main/FISHPainter/src/preprocess.py).
 - **Bounding Boxes**: Functions to decide if two bounding boxes should be merged and to merge bounding boxes for a given label can be found at [process_boxes.py](https://github.com/SimonBon/FISH-Painter/blob/main/FISHPainter/src/process_boxes.py).
 - **Signal Generation**: Functions for creating FISH images and their signal creation procedure can be found in [signals.py](https://github.com/SimonBon/FISHPainter/blob/main/FISHPainter/src/signals.py).
@@ -84,4 +84,4 @@ dataset = create_dataset(config_file, FISH_type="COPY_NUMBER", verbose=True)
 save2h5(dataset, output_h5_file)
 ```
 
-An example of this can be viewed in the provided [Notebook](https://github.com/SimonBon/FISHPainter/blob/main/FISHPainter/notebook.ipynb).
+An example of this can be viewed in the provided [Notebook](https://github.com/SimonBon/FISHPainter/blob/main/notebook.ipynb).
