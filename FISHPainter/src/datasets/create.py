@@ -3,10 +3,12 @@ from . import ids as ID
 import numpy as np
 from numbers import Number
 from ..utils.BackgroundTransformer import BackgroundTransformer
-from ... import FISHPainter_home
 from pathlib import Path
 from ..signals import create_FISH
 from tqdm import tqdm
+import os
+from ...config import FISHPainter_home
+from typing import Union, Literal
 
 DEFAULT_BACKGROUNDS = FISHPainter_home / "cell_backgrounds_128.h5"
 
@@ -40,7 +42,7 @@ def load_config(config_file):
     return config
 
 
-def create_dataset(config_file, FISH_type, background_path=None, verbose=False):
+def create_dataset(config_file, FISH_type: Union[Literal[ID.copynumber], Literal[ID.alt]] = ID.copynumber, background_path=None, verbose=False):
     
     assert FISH_type in POSSIBLE_TYPES, f"{FISH_type} is not implemented! Chose one of {POSSIBLE_TYPES}"
     

@@ -6,8 +6,8 @@ from numbers import Number
 MAX_ITERS=100
 
 # debug
-import matplotlib.pyplot as plt
-from cellplot.patches import draw_boxes_on_patch
+# import matplotlib.pyplot as plt
+# from cellplot.patches import draw_boxes_on_patch
 
 from typing import Union
 
