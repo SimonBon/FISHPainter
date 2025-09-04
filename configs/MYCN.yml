@@ -1,32 +1,29 @@
-NORMAL:
+normal:
   target_class: 0
-  number: 200
+  number: 2000
   num_red: [2, 2]
   num_green: [2, 2]
   signal_size: [1, 2]
+  target_class: 0
 
-G_AMP:
-  target_class: 2
-  number: 100
-  num_red: [2, 2]
-  num_green: [8, 20]
-  num_red_cluster: [0, 0]
-  num_green_cluster: [0, 3]
-  green_cluster_size: [6, 12]
-  signal_size: [1, 2]
-
-G_AMP_ONLY_CLUSTER:
-  target_class: 2
-  number: 100
-  num_red: [2, 2]
-  num_green: [2, 8]
-  num_green_cluster: [1, 2]
-  green_cluster_size: [8, 16]
-  signal_size: [1, 2]
-
-G_GAIN:
-  target_class: 1
+amp:
+  target_class: 0
   number: 200
   num_red: [2, 2]
-  num_green: [3,7]
+  num_green: [8, 15]
   signal_size: [1, 2]
+  target_class: 1
+
+# green_loss:
+#   target_class: 1
+#   number: 1000
+#   num_red: [2, 2]
+#   num_green: [1, 1]
+#   signal_size: [1, 2]
+
+# green_gain:
+#   target_class: 2
+#   number: 1000
+#   num_red: [2, 2]
+#   num_green: [2, 20]
+#   signal_size: [1, 2]
