@@ -15,8 +15,17 @@ from tqdm import tqdm
 
 from . import ids as ID
 from ..utils.BackgroundTransformer import BackgroundTransformer
+<<<<<<< HEAD
 from ... import FISHPainter_home
 from ..signals import create_FISH
+=======
+from pathlib import Path
+from ..signals import create_FISH
+from tqdm import tqdm
+import os
+from ...config import FISHPainter_home
+from typing import Union, Literal
+>>>>>>> 27a9c29e9d31394bca6130fdc94f68f7a201365b
 
 DEFAULT_BACKGROUNDS = FISHPainter_home / "cell_backgrounds_128.h5"
 
@@ -46,6 +55,7 @@ def load_config(config_file):
     return config
 
 
+<<<<<<< HEAD
 # ------------------------------
 # Parallel helpers (process-wide)
 # ------------------------------
@@ -71,6 +81,9 @@ def _make_one_image(task_tuple):
 
     # Sample params and a random background
     instance_parameters = define_instance_parameters(parameters, rng=rng)
+=======
+def create_dataset(config_file, FISH_type: Union[Literal[ID.copynumber], Literal[ID.alt]] = ID.copynumber, background_path=None, verbose=False):
+>>>>>>> 27a9c29e9d31394bca6130fdc94f68f7a201365b
     
     idx = rng.integers(0, len(_GLOBAL_BG))
     instance_background, instance_mask = _GLOBAL_BG[idx]
